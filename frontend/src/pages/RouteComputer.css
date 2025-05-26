@@ -1,0 +1,85 @@
+:root {
+    --dark-blue: #1b2631;
+    --light-blue: #2e3e4e;
+    --text-gray: #f8f9fa;
+    --accent-blue: #17a2b8;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --input-bg: #34495e;
+    --input-color: #fff;
+   }
+   
+   .rc-container {
+    padding: 20px;
+    background-color: var(--dark-blue);
+    display: flex;
+    flex-direction: column;
+   }
+   
+   .rc-data {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+   }
+   
+   .data-item {
+    padding: 15px;
+    background-color: var(--light-blue);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    color: var(--text-gray);
+   }
+   
+   .data-item strong {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--accent-blue);
+   }
+   
+   .buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+   }
+   
+   .btn, .first-btn, .second-btn, .back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--accent-blue);
+    color: var(--text-gray);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 1;
+   }
+   
+   .btn:hover, .first-btn:hover, .second-btn:hover, .back-button:hover  {
+    background-color: darken(var(--accent-blue), 15%);
+    transform: scale(1.02);
+    }
+
+    .btn:active, .first-btn:active, .second-btn:active, .back-button:active {
+    transform: scale(0.98);
+    }
+
+   input[type="text"],
+   input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background-color: var(--input-bg);
+    color: var(--input-color);
+    border: none;
+    border-radius: 4px;
+   }
+   
+   @media (max-width: 768px) {
+    .rc-data {
+    grid-template-columns: 1fr;
+    }
+   }
+   

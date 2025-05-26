@@ -1,0 +1,22 @@
+:root {
+    --dark-blue: #1b2631;
+    --light-blue: #2e3e4e;
+    --text-gray: #f8f9fa;
+    --accent-blue: #17a2b8;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --input-bg: #34495e;
+    --input-color: #fff;
+}
+
+.antivirus-container {
+    padding: 20px;
+    background-color: var(--dark-blue);
+    display: flex;
+    flex-direction: column;
+}
+
+.antivirus-data {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}

@@ -1,0 +1,128 @@
+:root {
+    --dark-blue: #1b2631;
+    --light-blue: #2e3e4e;
+    --text-gray: #f8f9fa;
+    --accent-blue: #17a2b8;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+.main_page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--dark-blue);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    color: var(--text-gray);
+    position: relative;
+    overflow: hidden;
+}
+
+h1 {
+    color: var(--text-gray);
+    font-size: 28px;
+    margin-bottom: 30px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+h1::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 4px;
+    background-color: var(--accent-blue);
+    margin: 20px auto;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    background-color: var(--light-blue);
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    z-index: 1;
+    color: var(--text-gray);
+}
+
+li:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: lighten(var(--accent-blue), 20%);
+    text-decoration: underline;
+}
+
+.add-button {
+    display: block;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto 0;
+    padding: 10px 20px;
+    background-color: var(--accent-blue);
+    color: var(--text-gray);
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    position: relative;
+    z-index: 1;
+}
+
+.add-button:hover {
+    background-color: darken(var(--accent-blue), 15%);
+    transform: scale(1.02);
+}
+
+.add-button:active {
+    transform: scale(0.98);
+}
+
+/* Дополнительные улучшения */
+.main_page::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent 50%, var(--light-blue) 50%);
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent 50%, var(--dark-blue) 50%);
+    opacity: 0.1;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+li:hover::before {
+    opacity: 0.2;
+}

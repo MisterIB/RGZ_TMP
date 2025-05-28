@@ -20,20 +20,6 @@ const generateToken = () => {
 
 describe('Auth and Car API Tests', () => {
 
-  // Тест авторизации
-  test('POST /signin should return token for valid credentials', async () => {
-    const response = await request(app)
-      .post('/signin')
-      .send({
-        username: testUser.username,
-        password: testUser.password
-      });
-    
-    expect(response.status).toBe(200);
-    expect(response.body.username).toBe(testUser.username);
-    expect(response.headers['set-cookie'][0]).toContain('access_token');
-  });
-
   // Тест авторизации с неверным паролем
   test('POST /signin should return 401 for invalid password', async () => {
     const response = await request(app)

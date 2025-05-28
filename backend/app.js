@@ -34,7 +34,7 @@ app.post('*', cors(corsOptions))
 app.get('*', cors(corsOptions))
 app.delete('*', cors(corsOptions))
 app.use(cors(corsOptions));
-app.listen(80, function(){
+app.listen(8000, function(){
   console.log('CORS-enabled web server listening on port 80')
 })
 

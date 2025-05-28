@@ -75,7 +75,7 @@ router.post('/signin', async (req, res) => {
     await pool.query('INSERT INTO log (id_source, data, type, message) VALUES ($1, NOW(), $2, $3)', [req.ip, 'auth', 'Успешный вход']);
   } catch(err) {
     console.log(err)
-    await pool.query('INSERT INTO log (id_source, data, type, message) VALUES ($3, NOW(), $1, $2)', ['error', 'Ошибка входа: ' + err.message, req.ip]);
+    await pool.query('INSERT INTO log ( data, type, message) VALUES ( NOW(), $1, $2)', ['error', 'Ошибка входа: ' + err.message]);
     res.status(400).send({error: true, message: `Не удалось войти`})
   }
 });

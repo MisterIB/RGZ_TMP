@@ -99,6 +99,54 @@ jobs:
             type VARCHAR(16) NOT NULL,
             message VARCHAR(128) NOT NULL
           );
+
+          INSERT INTO access_right (id, name) VALUES
+          (1, 'admin'),
+          (2, 'user');
+
+          INSERT INTO users (id, id_access_right, username, email, hash_password) VALUES
+          (1, 1, 'admin', 'admin@admin.ru', '$2b$10$pamYuHnLAT/N4h2MI85rquZ4hx9f0P33npAl0or4N.CyMQQMp0KfO'),
+          (2, 2, 'igor', 'igor@mail.ru', '$2b$10$pamYuHnLAT/N4h2MI85rquZ4hx9f0P33npAl0or4N.CyMQQMp0KfO');
+
+          INSERT INTO measuring_device_system (model, fuel_quantity, coolant_temperature, oil_pressure) VALUES
+          ('Bosch MDS-100', 27, 85, 2.4),
+          ('Delphi MDS-200', 60, 100, 3.8),
+          ('Bosh MDS-300', 45, 88, 3.6),
+          ('Continental MDS-400', 13, 123, 3.7),
+          ('Valeo MDS-500', 48, 91, 1.9),
+          ('Denso MDS-600', 52, 89, 3.6);
+
+          INSERT INTO onboard_control_system (model, brake_linings_status, engine_oil_level, brake_fluid_level, transmission_fluid_level, coolant_level, filter_status, instrument_lamps_status) VALUES
+          ('Bosch BCS-100', 'normal', 'normal', 'full', 'normal', 'full', 'clean', 'ok'),
+          ('Delphi BCS-200', 'good', 'normal', 'low', 'normal', 'low', 'clean', 'ok'),
+          ('Bosh BCS-300', 'normal', 'normal', 'full', 'low', 'full', 'clean', 'ok'),
+          ('Continental BCS-400', 'normal', 'low', 'full', 'normal', 'low', 'dirty', 'ok'),
+          ('Valeo BCS-500', 'good', 'low', 'low', 'low', 'normal', 'clean', 'ok'),
+          ('Denso BCS-600', 'good', 'normal', 'full', 'normal', 'full', 'dirty', 'ok');
+
+          INSERT INTO route_computer (model, fuel_consumption, mileage) VALUES
+          ('Bosch RC-100', 11, 150000),
+          ('Delphi RC-200', 9, 120000),
+          ('Bosh RC-300', 13, 200000),
+          ('Continental RC-400', 8.5, 130000),
+          ('Valeo RC-500', 7, 110000),
+          ('Denso RC-600', 8, 180000);
+
+          INSERT INTO antivirus (version, update_data, status, last_scan_data, last_scan_result) VALUES 
+          ('1.0.0', '2025-05-24 10:00:00', 'active', '2025-05-24 09:50:00', 'clean'),
+          ('1.0.1', '2025-05-23 15:30:00', 'inactive', '2025-05-23 15:20:00', 'infected'),
+          ('1.0.2', '2025-05-22 08:45:00', 'active', '2025-05-22 08:35:00', 'clean'),
+          ('1.0.3', '2025-05-21 14:15:00', 'active', '2025-05-21 14:05:00', 'warning'),
+          ('1.0.4', '2025-05-20 09:25:00', 'inactive', '2025-05-20 09:15:00', 'infected'),
+          ('1.0.5', '2025-05-19 16:50:00', 'active', '2025-05-19 16:40:00', 'clean');
+
+          INSERT INTO car (id_user, id_antivirus, id_onboard_control_system, id_measuring_device_system, id_route_computer, model, plate, color) VALUES
+          (1, 1, 1, 1, 1, 'Toyota Camry', 'A123BC', 'Черный'),
+          (1, 2, 2, 2, 2, 'Ford Focus', 'X456YZ', 'Белый'),
+          (1, 3, 3, 3, 3, 'BMW 320i', 'M789OP', 'Черный'),
+          (2, 4, 4, 4, 4, 'Honda Civic', 'L345JK', 'Серый'),
+          (2, 5, 5, 5, 5, 'Mercedes E-Class', 'P987LM', 'Белый'),
+          (2, 6, 6, 6, 6, 'Audi A4', 'Q678RS', 'Черный');
           EOF
 
 

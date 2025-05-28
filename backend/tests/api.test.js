@@ -43,7 +43,7 @@ describe('Auth and Car API Tests', () => {
         password: 'wrongpassword'
       });
     
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(401);
     expect(response.body.message).toBe('Неверный пароль!');
   });
 

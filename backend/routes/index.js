@@ -176,7 +176,7 @@ router.post('/signout', async (req, res) => {
  *         example: {error: true, message: 'Не удалось получить информацию об автомобилях'}
  */
 
-router.get('/cars', async (req, res) => {
+router.get('/cars', [authJwt.verifyToken], async (req, res) => {
   try {
     const id = req.query.userId
     const cars = await db.getCars(id)
@@ -218,7 +218,7 @@ router.get('/cars', async (req, res) => {
  *             example: {error: true, message: 'Не удалось добавить автомобиль'}
  */
 
-router.post('/cars', async (req, res) => {
+router.post('/cars', [authJwt.verifyToken], async (req, res) => {
   try {
     const { model, plate, color, RCmodel, MDSmodel, OCSmodel, userId, AVversion } = req.body
     console.log(req.body)
@@ -287,7 +287,7 @@ router.delete('/cars', [authJwt.verifyToken], async (req, res) => {
  *             example: {error: true, message: 'Не удалось получить информацию об автомобиле'}
  */
 
-router.get('/cars/:id', async (req, res) => {
+router.get('/cars/:id', [authJwt.verifyToken], async (req, res) => {
   try {
     const id = req.params.id
     const car = await db.getCar(id)
@@ -333,7 +333,7 @@ router.get('/cars/:id', async (req, res) => {
  *             example: {error: true, message: 'Не удалось получить информацию о маршрутном компьютере'}
  */
 
-router.get('/route_computer/:id', async (req, res) => {
+router.get('/route_computer/:id', [authJwt.verifyToken], async (req, res) => {
   try {
     const id = req.params.id
     const userId = await db.getUserIdByCarId(id)
@@ -384,7 +384,7 @@ router.put('/route_computer/:id',  [authJwt.verifyToken], async (req, res) => {
     res.status(200).send({error: false, message: `Данные успешно обновлены`})
   } catch (err) {
     console.log(err)
-    await pool.query('INSERT INTO log (id_source, data, type, message) VALUES ($3, NOW(), $1, $2)', ['error_update_RC', 'Ошибка обновления данных: ' + err.message, userId])
+    await pool.query('INSERT INTO log (data, type, message) VALUES (NOW(), $1, $2)', ['error_update_RC', 'Ошибка обновления данных: ' + err.message])
     res.status(400).send({error: true, message: `Не удалось обновить данные`})
   }
 })
@@ -418,7 +418,7 @@ router.put('/route_computer/:id',  [authJwt.verifyToken], async (req, res) => {
  *             example: {error: true, message: 'Не удалось получить информацию о бортовой системе контроля'}
  */
 
-router.get('/onboard_control/:id', async (req, res) => {
+router.get('/onboard_control/:id', [authJwt.verifyToken], async (req, res) => {
   try {
     const id = req.params.id
     const userId = await db.getUserIdByCarId(id)
@@ -505,7 +505,7 @@ router.put('/onboard_control/:id', [authJwt.verifyToken], async (req, res) => {
  *             example: {error: true, message: 'Не удалось получить информацию о системе измерительных приборов'}
  */
 
-router.get('/measuring_device/:id', async (req, res) => {
+router.get('/measuring_device/:id', [authJwt.verifyToken], async (req, res) => {
   try {
     const id = req.params.id
     const userId = await db.getUserIdByCarId(id)
@@ -588,7 +588,7 @@ router.put('/measuring_device/:id', [authJwt.verifyToken], async (req, res) => {
  *             example: {error: true, message: 'Не удалось получить информацию об антивирусе'}
  */
 
-router.get('/antivirus/:id', async (req, res) => {
+router.get('/antivirus/:id', [authJwt.verifyToken], async (req, res) => {
   try {
     const id = req.params.id
     const antivirus = await db.getAntivirus(id)
@@ -630,7 +630,7 @@ router.get('/antivirus/:id', async (req, res) => {
  *             example: {error: true, message: 'Не удалось обновить данные'}
  */
 
-router.put('/antivirus/:id', async (req, res) => {
+router.put('/antivirus/:id', [authJwt.verifyToken], async (req, res) => {
   try {
     const id = req.params.id
     const { version, update_data, status, last_scan_data, last_scan_result } = req.body
@@ -670,7 +670,7 @@ router.put('/antivirus/:id', async (req, res) => {
  *             example: {error: true, message: 'Не удалось получить информацию о системе'}
  */
 
-router.get('/checkSystem', async (req, res) => {
+router.get('/checkSystem', [authJwt.verifyToken], async (req, res) => {
   try {
     const id = req.params.id
     const infoRC = await db.getSystemInfoRC(id)
@@ -706,7 +706,7 @@ router.get('/checkSystem', async (req, res) => {
  *                 ]}
  */
 
-router.get('/log', async (req, res) => {
+router.get('/log', [authJwt.verifyToken], async (req, res) => {
   const userId = req.query.userId
   const logs = await db.getLogByUserId(userId)
   const anomalies = [];

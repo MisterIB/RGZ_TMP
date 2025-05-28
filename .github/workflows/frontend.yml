@@ -23,12 +23,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd frontend1
+          cd frontend
           npm install
 
       - name: Build project
         run: |
-          cd frontend1
+          cd frontend
           CI=false npm run build
 
       - name: Deploy to server

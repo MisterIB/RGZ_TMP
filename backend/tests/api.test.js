@@ -83,6 +83,7 @@ describe('Auth and Car API Tests', () => {
         RCmodel: 'Test RC',
         MDSmodel: 'Test MDS',
         OCSmodel: 'Test OCS',
+        AVversion: 'Test AV',
         userId: 1
       });
     
@@ -105,7 +106,7 @@ describe('Auth and Car API Tests', () => {
      test('PUT /route_computer/:id should update route computer', async () => {
       const token = generateToken();
       const response = await request(app)
-      .put('/route_computer/1')
+      .put('/route_computer/3')
       .set('Cookie', `access_token=${token}`)
       .send({
       model: 'Updated RC Model',

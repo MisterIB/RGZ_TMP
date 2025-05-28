@@ -1,0 +1,320 @@
+openapi: 3.0.0
+info:
+  title: Антивирусная и защитная политика для автомобильных информационных систем
+  version: 1.0.0
+servers:
+  - url: http://217.71.129.139:5597/
+path:
+  /signin:
+  post:
+     description: Используется для входа пользователем в систему
+     responses:
+       200:
+         description: Успешный вход
+         content:
+           application/json:
+             example: 
+                 {
+                 "id": 2,
+                 "username": "igor",
+                 "email": "igor@mail.ru"
+                 }
+       400:
+         description: Не удалось войти
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось войти'}
+ /register:
+  post:
+     description: Используется для регистрации пользователя в системе
+     responses:
+       201:
+         description: Успешная регистрация
+         content:
+           application/json:
+             example: {error: false, message: 'Регистрация прошла успешно'}
+       400:
+         description: Не удалось зарегистрироваться
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось зарегистрироваться'}
+ /signout:
+  post:
+     description: Используется для выхода из системы
+     responses:
+       201:
+         description: Успешный выход из системы
+         content:
+           application/json:
+             example: {error: false, message: 'Вы успешно вышли'}
+       400:
+         description: Не удалось выйти из системы
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось выйти из системы'}
+  /cars:
+  get:
+     description: Используется для получения списка автомобилей
+     responses:
+       200:
+         description: Получен список автомобилей
+         content:
+           application/json:
+             example: 
+                 {
+                 "id": 4,
+                 "id_user": 2,
+                 "id_antivirus": 4,
+                 "id_onboard_control_system": 4,
+                 "id_measuring_device_system": 4,
+                 "id_route_computer": 4,
+                 "model": "Honda Civic",
+                 "plate": "L345JK",
+                 "color": "Серый"
+                  }
+       400:
+         description: Не удалось получить информацию об автомобилях
+         content:
+           application/json:
+         example: {error: true, message: 'Не удалось получить информацию об автомобилях'}
+ /cars:
+  post:
+     description: Используется для добавления автомобиля
+     responses:
+       201:
+         description: Автомобиль успешно добавлен
+         content:
+           application/json:
+             example: 
+                 {
+                 "id": 10,
+                 "id_user": 2,
+                 "id_antivirus": 9,
+                 "id_onboard_control_system": 9,
+                 "id_measuring_device_system": 9,
+                 "id_route_computer": 9,
+                 "model": "Honda Civic",
+                 "plate": "L345JK",
+                 "color": "Серый"
+                 }
+       400:
+         description: Не удалось добавить автомобиль
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось добавить автомобиль'}
+ /cars:
+  delete:
+     description: Используется для удаления автомобиля
+     responses:
+       200:
+         description: Автомобиль успешно удален
+         content:
+           application/json:
+             example: {error: false, message:  'Автомобиль успешно удален'}
+       400:
+         description: Не удалось удалить автомобиль
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось удалить автомобиль'}
+ /cars/:id:
+  get:
+     description: Используется для получения данных об автомобиле
+     responses:
+       200:
+         description: Получены данные автомобиля
+         content:
+           application/json:
+             example:
+                 {
+                 "id": 3,
+                 "model": "BMW 320i",
+                 "plate": "M789OP",
+                 "color": "Черный"
+                 }
+       400:
+         description: Не удалось получить информацию об автомобиле
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось получить информацию об автомобиле'}
+ /route_computer/:id:
+  get:
+     description: Используется для получения данных маршрутного компьютера
+     responses:
+       200:
+         description: Получены данные маршрутного компьютера
+         content:
+           application/json:
+             example:
+                 {
+                 "id": 3,
+                 "model": "Bosh RC-300",
+                 "fuel_consumption": 13,
+                 "mileage": 200000
+                 }
+       400:
+         description: Не удалось получить информацию о маршрутном компьютере
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось получить информацию о маршрутном компьютере'}
+ /route_computer/:id:
+  put:
+     description: Используется для изменения данных маршрутного компьютера
+     responses:
+       200:
+         description: Данные успешно обновлены
+         content:
+           application/json:
+             example: {error: false, message: 'Данные успешно обновлены'}
+       400:
+         description: Не удалось обновить данные
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось обновить данные'}
+ /onboard_control/:id:
+  get:
+     description: Используется для получения данных бортовой системы контроля
+     responses:
+       200:
+         description: Получены данные бортовой системы контроля
+         content:
+           application/json:
+             example:
+                 {
+                 "id": 3,
+                 "model": "Bosh BCS-300",
+                 "brake_linings_status": "normal",
+                 "engine_oil_level": "normal",
+                 "brake_fluid_level": "full",
+                 "transmission_fluid_level": "low",
+                 "coolant_level": "full",
+                 "filter_status": "clean",
+                 "instrument_lamps_status": "ok"
+                 }
+       400:
+         description: Не удалось получить информацию о бортовой системе контроля
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось получить информацию о бортовой системе контроля'}
+ /onboard_control/:id:
+  put:
+     description: Используется для получения данных бортовой системы контроля
+     responses:
+       200:
+         description: Данные успешно обновлены
+         content:
+           application/json:
+             example: {error: false, message: 'Данные успешно обновлены'}
+       400:
+         description: Не удалось обновить данные
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось обновить данные'}
+ /measuring_device/:id:
+  get:
+     description: Используется для получения данных системы измерительных приборов
+     responses:
+       200:
+         description: Получены данные системы измерительных приборов
+         content:
+           application/json:
+             example: 
+                 {
+                 "id": 3,
+                 "model": "Bosh MDS-300",
+                 "fuel_quantity": 45,
+                 "coolant_temperature": 88,
+                 "oil_pressure": 4
+                 }
+       400:
+         description: Не удалось получить информацию о системе измерительных приборов
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось получить информацию о системе измерительных приборов'}
+ /measuring_device/:id:
+  put:
+     description: Используется для обновления данных системы измерительных приборов
+     responses:
+       200:
+         description: Данные успешно обновлены
+         content:
+           application/json:
+             example: {error: false, message: 'Данные успешно обновлены'}
+       400:
+         description: Не удалось обновить данные
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось обновить данные'}
+ /antivirus/:id:
+  get:
+     description: Используется для получения данных антивируса
+     responses:
+       200:
+         description: Получены данные антивируса
+         content:
+           application/json:
+             example: 
+                 {
+                 "id": 3,
+                 "version": "1.0.2",
+                 "update_data": "2025-05-21T18:45:00.000Z",
+                 "status": "active",
+                 "last_scan_data": "2025-05-21T18:35:00.000Z",
+                 "last_scan_result": "warning"
+                 }
+       400:
+         description: Не удалось получить информацию об антивирусе
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось получить информацию об антивирусе'}
+ /antivirus/:id:
+  put:
+     description: Используется для обновления данных антивируса
+     responses:
+       200:
+         description: Данные успешно обновлены
+         content:
+           application/json:
+             example: {error: false, message: 'Данные успешно обновлены'}
+       400:
+         description: Не удалось обновить данные
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось обновить данные'}
+ /checkSystem:
+  get:
+     description: Используется для получения результатов проверки системы
+     responses:
+       200:
+         description: Получены данные проверки системы
+         content:
+           application/json:
+             example: 
+                 {
+                 "автомобиль": "Honda Civic",
+                 "устройство": "Continental MDS-400",
+                 "проблемы": [
+                 "Низкий уровень топлива",
+                 "Высокая температура"
+                 ]
+                 }
+       400:
+         description: Не удалось получить информацию о системе
+         content:
+           application/json:
+             example: {error: true, message: 'Не удалось получить информацию о системе'}
+ /log:
+  get:
+     description: Используется для получения результатов проверки логов
+     responses:
+       200:
+         description: Получены данные проверки логов
+         content:
+           application/json:
+             example: 
+                 {
+                 "anomalies":
+                 [{
+                 "Тип": "Доступ к данным маршрутного компьютера автомобиля ",
+                 "Детали": "Обнаружено 6 попыток доступа за короткий промежуток времени"
+                 }
+                 ]}

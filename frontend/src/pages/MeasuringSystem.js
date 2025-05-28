@@ -12,7 +12,7 @@ const MeasuringDeviceSystem = () => {
     useEffect(() => {
         const fetchMDS = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/measuring_device/${id}`, { withCredentials: true, credentials: 'include' })
+                const response = await axios.get(`http://217.71.129.139:5675/measuring_device/${id}`, { withCredentials: true, credentials: 'include' })
                 setMds(response.data)
             } catch (err) {
                 console.log(err)
@@ -27,7 +27,7 @@ const MeasuringDeviceSystem = () => {
 
     const handleSave = async () => {
         try {
-            await axios.put(`http://localhost:5000/measuring_device/${id}`, mds, { withCredentials: true, credentials: 'include' })
+            await axios.put(`http://217.71.129.139:5675/measuring_device/${id}`, mds, { withCredentials: true, credentials: 'include' })
             setIsEditing(false)
         } catch (err) {
             console.log(err)

@@ -12,7 +12,7 @@ const Antivirus = () => {
     useEffect(() => {
         const fetchAntivirus = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/antivirus/${id}`, { withCredentials: true, credentials: 'include' })
+                const response = await axios.get(`http://217.71.129.139:5675/antivirus/${id}`, { withCredentials: true, credentials: 'include' })
                 setAntivirus(response.data)
             } catch (err) {
                 console.log(err)
@@ -27,7 +27,7 @@ const Antivirus = () => {
 
     const handleSave = async () => {
         try {
-            await axios.put(`http://localhost:5000/antivirus/${id}`, antivirus, { withCredentials: true, credentials: 'include' })
+            await axios.put(`http://217.71.129.139:5675/antivirus/${id}`, antivirus, { withCredentials: true, credentials: 'include' })
             setIsEditing(false)
         } catch (err) {
             console.log(err)

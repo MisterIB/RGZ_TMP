@@ -1,0 +1,48 @@
+name: Frontend
+
+on:
+  push:
+    branches:
+      - main 
+  pull_request:
+    branches:
+      - main 
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          cd frontend1
+          npm install
+
+      - name: Build project
+        run: |
+          cd frontend1
+          CI=false npm run build
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            cd /root/lab4/frontend1
+            git pull origin main
+
+            npm install
+            npm run build
+
+            cp -r build/ /var/www/html
+            echo "correct"

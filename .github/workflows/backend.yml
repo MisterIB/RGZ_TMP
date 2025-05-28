@@ -1,0 +1,178 @@
+name: Backend
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+
+      - name: deploy DataBase
+        run: |
+          sudo systemctl start postgresql
+          sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD '080906';"
+
+
+          sudo -u postgres psql postgres <<EOF
+          CREATE TABLE access_right (
+            id SERIAL PRIMARY KEY,
+            name VARCHAR(32)
+          );
+
+          CREATE TABLE users (
+            id SERIAL PRIMARY KEY,
+            id_access_right INT NOT NULL REFERENCES access_right(id) ON DELETE CASCADE,
+            username VARCHAR(32) NOT NULL,
+            email VARCHAR(64) NOT NULL,
+            hash_password VARCHAR(64) NOT NULL
+          );
+
+          CREATE TABLE measuring_device_system (
+            id SERIAL PRIMARY KEY,
+            model VARCHAR(32) NOT NULL,
+            fuel_quantity INT NOT NULL,
+            coolant_temperature INT NOT NULL,
+            oil_pressure INT NOT NULL
+          );
+
+          CREATE TABLE onboard_control_system (
+            id SERIAL PRIMARY KEY,
+            model VARCHAR(32) NOT NULL,
+            brake_linings_status VARCHAR(16) NOT NULL,
+            engine_oil_level VARCHAR(16) NOT NULL,
+            brake_fluid_level VARCHAR(16) NOT NULL,
+            transmission_fluid_level VARCHAR(16) NOT NULL,
+            coolant_level VARCHAR(16) NOT NULL,
+            filter_status VARCHAR(16) NOT NULL,
+            instrument_lamps_status VARCHAR(16) NOT NULL
+          );
+
+          CREATE TABLE route_computer (
+            id SERIAL PRIMARY KEY,
+            model VARCHAR(32) NOT NULL,
+            fuel_consumption INT NOT NULL,
+            mileage INT NOT NULL
+          );
+
+          CREATE TABLE antivirus (
+            id SERIAL PRIMARY KEY,
+            version VARCHAR(16) NOT NULL,
+            update_data TIMESTAMP NOT NULL DEFAULT NOW(),
+            status VARCHAR(16) NOT NULL CHECK (status IN ('active', 'inactive')),
+            last_scan_data TIMESTAMP NOT NULL,
+            last_scan_result VARCHAR(16) NOT NULL
+          );
+
+
+          CREATE TABLE car (
+            id SERIAL PRIMARY KEY,
+            id_user INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+            id_antivirus INT NOT NULL REFERENCES antivirus(id) ON DELETE CASCADE,
+            id_onboard_control_system INT NOT NULL REFERENCES onboard_control_system(id) ON DELETE CASCADE,
+            id_measuring_device_system INT NOT NULL REFERENCES measuring_device_system(id) ON DELETE CASCADE,
+            id_route_computer INT NOT NULL REFERENCES route_computer(id) ON DELETE CASCADE,
+            model VARCHAR(32) NOT NULL,
+            plate VARCHAR(6) NOT NULL,
+            color VARCHAR(10) NOT NULL
+          );
+
+          CREATE TABLE log (
+            id SERIAL PRIMARY KEY,
+            id_source INT REFERENCES users(id) ON DELETE CASCADE,
+            data TIMESTAMP NOT NULL DEFAULT NOW(),
+            type VARCHAR(16) NOT NULL,
+            message VARCHAR(128) NOT NULL
+          );
+
+          INSERT INTO access_right (id, name) VALUES
+          (1, 'admin'),
+          (2, 'user');
+
+          INSERT INTO users (id, id_access_right, username, email, hash_password) VALUES
+          (1, 1, 'admin', 'admin@admin.ru', '$2b$10$pamYuHnLAT/N4h2MI85rquZ4hx9f0P33npAl0or4N.CyMQQMp0KfO'),
+          (2, 2, 'igor', 'igor@mail.ru', '$2b$10$pamYuHnLAT/N4h2MI85rquZ4hx9f0P33npAl0or4N.CyMQQMp0KfO');
+
+          INSERT INTO measuring_device_system (model, fuel_quantity, coolant_temperature, oil_pressure) VALUES
+          ('Bosch MDS-100', 27, 85, 2.4),
+          ('Delphi MDS-200', 60, 100, 3.8),
+          ('Bosh MDS-300', 45, 88, 3.6),
+          ('Continental MDS-400', 13, 123, 3.7),
+          ('Valeo MDS-500', 48, 91, 1.9),
+          ('Denso MDS-600', 52, 89, 3.6);
+
+          INSERT INTO onboard_control_system (model, brake_linings_status, engine_oil_level, brake_fluid_level, transmission_fluid_level, coolant_level, filter_status, instrument_lamps_status) VALUES
+          ('Bosch BCS-100', 'normal', 'normal', 'full', 'normal', 'full', 'clean', 'ok'),
+          ('Delphi BCS-200', 'good', 'normal', 'low', 'normal', 'low', 'clean', 'ok'),
+          ('Bosh BCS-300', 'normal', 'normal', 'full', 'low', 'full', 'clean', 'ok'),
+          ('Continental BCS-400', 'normal', 'low', 'full', 'normal', 'low', 'dirty', 'ok'),
+          ('Valeo BCS-500', 'good', 'low', 'low', 'low', 'normal', 'clean', 'ok'),
+          ('Denso BCS-600', 'good', 'normal', 'full', 'normal', 'full', 'dirty', 'ok');
+
+          INSERT INTO route_computer (model, fuel_consumption, mileage) VALUES
+          ('Bosch RC-100', 11, 150000),
+          ('Delphi RC-200', 9, 120000),
+          ('Bosh RC-300', 13, 200000),
+          ('Continental RC-400', 8.5, 130000),
+          ('Valeo RC-500', 7, 110000),
+          ('Denso RC-600', 8, 180000);
+
+          INSERT INTO antivirus (version, update_data, status, last_scan_data, last_scan_result) VALUES 
+          ('1.0.0', '2025-05-24 10:00:00', 'active', '2025-05-24 09:50:00', 'clean'),
+          ('1.0.1', '2025-05-23 15:30:00', 'inactive', '2025-05-23 15:20:00', 'infected'),
+          ('1.0.2', '2025-05-22 08:45:00', 'active', '2025-05-22 08:35:00', 'clean'),
+          ('1.0.3', '2025-05-21 14:15:00', 'active', '2025-05-21 14:05:00', 'warning'),
+          ('1.0.4', '2025-05-20 09:25:00', 'inactive', '2025-05-20 09:15:00', 'infected'),
+          ('1.0.5', '2025-05-19 16:50:00', 'active', '2025-05-19 16:40:00', 'clean');
+
+          INSERT INTO car (id_user, id_antivirus, id_onboard_control_system, id_measuring_device_system, id_route_computer, model, plate, color) VALUES
+          (1, 1, 1, 1, 1, 'Toyota Camry', 'A123BC', 'Черный'),
+          (1, 2, 2, 2, 2, 'Ford Focus', 'X456YZ', 'Белый'),
+          (1, 3, 3, 3, 3, 'BMW 320i', 'M789OP', 'Черный'),
+          (2, 4, 4, 4, 4, 'Honda Civic', 'L345JK', 'Серый'),
+          (2, 5, 5, 5, 5, 'Mercedes E-Class', 'P987LM', 'Белый'),
+          (2, 6, 6, 6, 6, 'Audi A4', 'Q678RS', 'Черный');
+          EOF
+
+
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          npm install
+
+      - name: Run tests
+        run: |
+          cd backend
+          npm test
+
+      - name: Deploy to server and build locally
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+
+            if [ ! -d "/root/lab4" ]; then
+              git clone https://github.com/MisterIB/RGZ_TMP.git /root/lab4
+            fi
+            cd /root/lab4/backend
+            git pull origin main
+            npm run start
+            echo "correct"

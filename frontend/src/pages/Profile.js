@@ -24,7 +24,7 @@ const Profile = () => {
 
     const signOut = async () => {
       try {
-        const response = await axios.post('http://localhost:5000/signout', {}, {withCredentials: true, credentials: 'include'})
+        const response = await axios.post('http://217.71.129.139:5675/signout', {}, {withCredentials: true, credentials: 'include'})
         navigate('/')
       } catch (err) {
         console.log(err)
@@ -34,7 +34,7 @@ const Profile = () => {
 
     const handleAddCar = async () => {
       try {
-          const response = await axios.post('http://localhost:5000/cars', newCar, { withCredentials: true, credentials: 'include' })
+          const response = await axios.post('http://217.71.129.139:5675/cars', newCar, { withCredentials: true, credentials: 'include' })
           setCars([...cars, response.data])
           setNewCar({ RCmodel: '', MDSmodel: '', OCSmodel: '', model: '', plate: '', color: '', userId: user.id, AVversion: '' })
           setShowForm(false)
@@ -46,7 +46,7 @@ const Profile = () => {
 
   const handleDeleteCar = async (carId) => {
       try {
-          const response = await axios.delete('http://localhost:5000/cars?carId=' + carId, { withCredentials: true, credentials: 'include' })
+          const response = await axios.delete('http://217.71.129.139:5675/cars?carId=' + carId, { withCredentials: true, credentials: 'include' })
           setCars(cars.filter(car => car.id !== carId))
       } catch (err) {
           console.log(err)
@@ -56,7 +56,7 @@ const Profile = () => {
 
   const handleCheckSystem = async () => {
     try {
-        const response = await axios.get(`http://localhost:5000/checkSystem`, {
+        const response = await axios.get(`http://217.71.129.139:5675/checkSystem`, {
             withCredentials: true,
             credentials: 'include'
         })
@@ -69,7 +69,7 @@ const Profile = () => {
 
   const handleChekLogs = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/log?userId=' + user.id, { withCredentials: true, credentials: 'include' })
+        const response = await axios.get('http://217.71.129.139:5675/log?userId=' + user.id, { withCredentials: true, credentials: 'include' })
         setAnomalies(response.data.anomalies);
     } catch (err) {
 
@@ -79,7 +79,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchCars = async() => {
         try {
-            const response = await axios.get('http://localhost:5000/cars?userId=' + user.id, { withCredentials: true, credentials: 'include' });
+            const response = await axios.get('http://217.71.129.139:5675/cars?userId=' + user.id, { withCredentials: true, credentials: 'include' });
             setCars(response.data)
             setLoading(false)
         } catch (err) {
@@ -116,7 +116,7 @@ const Profile = () => {
 
                 <button className="check-btn" onClick={handleCheckSystem}>Проверить систему</button>
 
-                <button className="check-btn" onClick={handleChekLogs}>Проверка логов</button>
+                <button className="check-btn" onClick={handleChekLogs}>Проверить логи</button>
 
               </div>
               <h3>Ваши автомобили</h3>
@@ -160,7 +160,7 @@ const Profile = () => {
           ) : (
             <p>Пользователь не найден</p>
           )}
-        <h3>Результат проверки:</h3>
+        <h3>Результат проверки системы:</h3>
           <div className="data-item">
     {checkResult ? (
         <div className="check-result">
@@ -180,7 +180,7 @@ const Profile = () => {
         </div>
     ) : 'Проверка не проводилась'}
 </div>
-<h3>Результат проверки логов</h3>
+<h3>Результат проверки логов:</h3>
 <div className="anomaly-list">
  {anomalies.length > 0 ? (
  anomalies.map((anomaly, index) => (

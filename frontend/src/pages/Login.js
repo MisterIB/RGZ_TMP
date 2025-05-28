@@ -9,7 +9,7 @@ const Login = () => {
 
   const register = async (username, email, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/register', {username, email, password}, {withCredentials: true, credentials: 'include'})  
+      const response = await axios.post('http://217.71.129.139:5675/register', {username, email, password}, {withCredentials: true, credentials: 'include'})  
       navigate('/profile')
     } catch (err) {
         console.log(err)
@@ -19,7 +19,7 @@ const Login = () => {
   
   const signIn = async (username, password) => {
     try {
-      const response = await axios.post('http://localhost:5000/signin', {username, password}, {withCredentials: true, credentials: 'include'})
+      const response = await axios.post('http://217.71.129.139:5675/signin', {username, password}, {withCredentials: true, credentials: 'include'})
       setUser(response.data)
       localStorage.clear('user')
       localStorage.setItem('user', JSON.stringify(response.data))

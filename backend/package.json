@@ -5,6 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node ./bin/www",
+    "generate": "node ./doc/generate-doc.js",
     "devstart": "nodemon ./bin/www",
     "test": "jest"
   },
@@ -16,12 +17,17 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-swagger-generator": "^1.1.17",
     "http-errors": "~1.6.3",
+    "json2yaml": "^1.1.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "~1.9.1",
     "pg": "^8.15.6",
     "pug": "2.0.0-beta11",
     "supertest": "^7.1.1",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "swagger2openapi": "^7.0.8",
     "uuid": "^11.1.0"
   },
   "devDependencies": {

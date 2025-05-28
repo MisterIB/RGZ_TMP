@@ -11,7 +11,7 @@ const Car = () => {
     useEffect(() => {
         const fetchCar = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/cars/${id}`, {withCredentials: true, credentials: 'include'})
+                const response = await axios.get(`http://217.71.129.139:5675/cars/${id}`, {withCredentials: true, credentials: 'include'})
                 setCar(response.data);
             } catch (err) {
                 alert('Ошибка при получении данных автомобиля')

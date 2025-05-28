@@ -12,7 +12,7 @@ const RouteComputer = () => {
     useEffect(() => {
         const fetchRC = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/route_computer/${id}`, { withCredentials: true, credentials: 'include' });
+            const response = await axios.get(`http://217.71.129.139:5675/route_computer/${id}`, { withCredentials: true, credentials: 'include' });
             setRc(response.data)
         } catch (err) {
             console.log(err)
@@ -26,7 +26,7 @@ const RouteComputer = () => {
 
     const handleSave = async () => {
     try {
-        await axios.put(`http://localhost:5000/route_computer/${id}`, rc, { withCredentials: true, credentials: 'include' })
+        await axios.put(`http://217.71.129.139:5675/route_computer/${id}`, rc, { withCredentials: true, credentials: 'include' })
         setIsEditing(false)
     } catch (err) {
         console.log(err)

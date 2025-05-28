@@ -12,7 +12,7 @@ const OnboardControl = () => {
     useEffect(() => {
         const fetchOCS = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/onboard_control/${id}`, { withCredentials: true, credentials: 'include'})
+                const response = await axios.get(`http://217.71.129.139:5675/onboard_control/${id}`, { withCredentials: true, credentials: 'include'})
                 setOcs(response.data)
             } catch (err) {
                 console.log(err)
@@ -26,7 +26,7 @@ const OnboardControl = () => {
 
     const handleSave = async () => {
         try {
-            await axios.put(`http://localhost:5000/onboard_control/${id}`, ocs, { withCredentials: true, credentials: 'include' })
+            await axios.put(`http://217.71.129.139:5675/onboard_control/${id}`, ocs, { withCredentials: true, credentials: 'include' })
             setIsEditing(false)
         } catch (err) {
             console.log(err)

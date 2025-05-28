@@ -7,6 +7,10 @@ var logger = require('morgan');
 const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
+
+
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -51,6 +55,35 @@ pool.query('SELECT NOW()', (err, result) => {
     console.log('Результат запроса:', result.rows[0]);
   }
 })
+
+const swaggerOptions = {
+  swaggerDefinition: {
+      openapi: '3.0.0',
+      info: {
+          title: 'My API',
+          version: '1.0.0',
+          description: 'API documentation using Swagger',
+      },
+      servers: [
+          {
+              url: `http://localhost:5000`,
+          },
+      ],
+ components: {
+   securitySchemes: {
+       bearerAuth: {
+           type: 'http',
+           scheme: 'bearer',
+           bearerFormat: 'JWT', 
+       },
+   },
+},
+  },
+  apis: ['./routes/*.js'], // Path to your API docs
+};
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
